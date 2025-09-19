@@ -25,7 +25,8 @@ rustup component add llvm-tools-preview
 cargo install cargo-llvm-cov
 
 # Run
-cargo llvm-cov    # Generate coverage report
+cargo llvm-cov --all-features --workspace --lcov --output-path lcov.info
+cargo llvm-cov report --html --output-dir coverage
 ```
 
 ### 3. Linting (clippy)
@@ -63,16 +64,15 @@ cargo fmt -- --check   # Fail CI if code is unformatted
 **Commands:**
 ```bash
 # Install
-cargo install cargo-audit
+cargo install cargo-deny    # More powerful than cargo-audit
 
 # Run  
-cargo audit    # Scan dependency tree for vulnerabilities
+cargo deny check advisories    # Scan for vulnerabilities
 ```
 
-## Ready-to-Use GitHub Actions Workflow
+## Complete GitHub Actions Setup
 
-Create `.github/workflows/general.yml` in your repository with the following configuration from the Zero To Production book:
-
+### Main Workflow: `.github/workflows/general.yml`
 ```yaml
 name: Rust
 
@@ -80,6 +80,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
+    types: [opened, synchronize, reopened]
     branches: [ main ]
 
 env:
@@ -92,10 +93,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-        
       - name: Install the Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
-        
       - name: Run tests
         run: cargo test
 
@@ -122,13 +121,57 @@ jobs:
           components: clippy
       - name: Linting
         run: cargo clippy -- -D warnings
+
+  coverage:
+    name: Code coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install the Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: llvm-tools-preview
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+      - name: Generate code coverage
+        run: cargo llvm-cov --all-features --workspace --lcov --output-path lcov.info
+      - name: Generate report
+        run: cargo llvm-cov report --html --output-dir coverage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "Coverage report"
+          path: coverage/
 ```
 
-**What this does**: 
-- **3 parallel jobs**: Tests, Formatting check, Linting
-- **Automatic caching**: The `actions-rust-lang/setup-rust-toolchain@v1` action handles dependency caching
+### Security Audit Workflow: `.github/workflows/audit.yml`
+```yaml
+name: Security audit
+
+on:
+  schedule:
+    - cron: '0 0 * * *'    # Daily at midnight
+  push:
+    paths:
+      - '**/Cargo.toml'    # When dependencies change
+      - '**/Cargo.lock'
+
+jobs:
+  security_audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: taiki-e/install-action@cargo-deny
+      - name: Scan for vulnerabilities
+        run: cargo deny check advisories
+```
+
+**What this setup provides**:
+- **4 parallel jobs** on every PR: Tests, Formatting, Linting, Coverage
+- **Daily security scans** + scans when dependencies change
+- **Coverage reports** as downloadable artifacts
+- **Automatic caching** via `actions-rust-lang/setup-rust-toolchain@v1`
 - **Fail-fast**: Any job failure blocks the PR/merge
 
-**Typical CI Pipeline Order**: Tests → Coverage → Linting → Formatting → Security Audit
+**Pipeline execution order**: All jobs run in parallel except security audit (runs separately on schedule/dependency changes)
 
 **Source**: [Zero To Production GitHub Workflows](https://github.com/LukeMathWalker/zero-to-production/tree/root-chapter-03-part0/.github/workflows)
