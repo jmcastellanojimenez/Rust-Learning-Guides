@@ -2,7 +2,7 @@
 
 ---
 
-### IMMUTABILITY - "Safe by Default"
+### 👥 IMMUTABILITY - "Safe by Default"
 
 ```rust
 // Variables are IMMUTABLE by default
