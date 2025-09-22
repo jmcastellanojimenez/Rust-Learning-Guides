@@ -95,17 +95,22 @@ No GC pauses, no memory leaks, no segfaults - automatic memory safety with zero 
 
 ---
 
-### 💥 PANIC vs RESULT - "Crash vs Handle Gracefully"
+### 💥 Result<T, E> Pattern - "Explicit Error Handling"
 
-```rust
-// PANIC way: Program explodes if something goes wrong
-let guess: u32 = guess.trim().parse().expect("error");  // 💀 DEATH if not a number
+```
+// GRACEFUL: Function returns Result for caller to decide
+fn parse_number(input: &str) -> Result<u32, ParseIntError> {
+    input.trim().parse()  // Returns Result - caller chooses how to handle
+}
 
-// GRACEFUL way: Handle the problem like a professional  
-let guess: u32 = match guess.trim().parse() {
-    Ok(num) => num,        // Success: use the number
-    Err(_) => continue,    // Error: try again, don't crash
-};
+// Caller handles gracefully
+match parse_number(&user_input) {
+    Ok(num) => println!("Got number: {}", num),
+    Err(_) => println!("Invalid input, try again"),
+}
+
+// PANICKING: Convert Result to panic (rarely appropriate in production)
+let num: u32 = parse_number(&user_input).expect("Must be a number"); // Crashes if error
 ```
 
 🧠 **How do you handle errors in production systems?**
