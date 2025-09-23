@@ -77,7 +77,7 @@ for word in "hello world hello".split_whitespace() {
 
 ---
 
-## The Real Issues You'll Hit
+## 🔥 The Real Issues You'll Hit
 
 **Borrowing while iterating:**
 ```rust
