@@ -10,7 +10,7 @@
 
 ---
 
-## － VEC<T> - "Dynamic Lists"
+## － VEC<T> "Dynamic Lists"
 
 ```rust
 // Create and modify
@@ -31,7 +31,7 @@ for score in &scores {
 
 ---
 
-## － STRING - "Text That Can Change"
+## － STRING "Text That Can Change"
 
 ```rust
 // Build strings
@@ -53,7 +53,7 @@ let first = text.chars().nth(0);            // Returns Option<char>
 
 ---
 
-## － HASHMAP<K,V> - "Key-Value Storage"
+## － HASHMAP<K,V> "Key-Value Storage"
 
 ```rust
 use std::collections::HashMap;
