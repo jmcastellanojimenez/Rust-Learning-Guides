@@ -1,7 +1,9 @@
 ### Quick Reference
 
 **Vec** - Use for lists of the same type that grow/shrink
+
 **String** - Use for text that changes (for read-only text, use &str)  
+
 **HashMap** - Use for key-value lookups and counting
 
 All three store data on the heap and can grow at runtime. All three follow Rust's ownership rules strictly.
