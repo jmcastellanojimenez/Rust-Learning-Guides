@@ -22,11 +22,7 @@ let can_modify = &mut data;  // mutable reference (if data was mut)
 ```
 · Multiple immutable references (&data), OR
 
-· Exactly one mutable reference (&mut data)
-
-- Key Point:
-
-It's not "one mutable reference per variable forever" - it's "one active mutable reference at a time."
+· Exactly one active mutable reference (&mut data) at a time.
 ```
 
 🧠 **How does Rust handle variable safety?**
