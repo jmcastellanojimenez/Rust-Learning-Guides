@@ -1,6 +1,8 @@
 **"Rust eliminates entire categories of bugs at compile time - memory leaks, data races, null pointer crashes, and unhandled errors - while maintaining zero-cost abstractions for maximum performance."**
 
 ---
+## 🔒 Foundation Layer:
+---
 
 ### 👥 IMMUTABILITY - "Safe by Default"
 
@@ -135,6 +137,8 @@ let num: u32 = parse_number(&user_input).expect("Must be a number"); // Crashes 
 🔥 **Why This Is REVOLUTIONARY**
 No hidden exceptions, no silent failures, no production crashes - every error path is explicit and handled.
 
+---
+## 🏗️ Architecture Layer:
 ---
 
 ### 🏗️ STRUCTS & METHODS - "Objects Without the Drama"
