@@ -18,11 +18,8 @@ let data = String::from("hello");
 let read_only = &data;       // immutable reference
 let can_modify = &mut data;  // mutable reference (if data was mut)
 ```
-
+💡 At any given moment, you can have EITHER:
 ```
-- The Actual Rule:
-At any given moment, you can have EITHER:
-
 · Multiple immutable references (&data), OR
 
 · Exactly one mutable reference (&mut data)
