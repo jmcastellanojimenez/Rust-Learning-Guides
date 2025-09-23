@@ -297,49 +297,38 @@ No null pointer exceptions, no forgotten edge cases, no runtime state errors - a
 ### 🎯 TRAITS - "Contracts for Behavior"
 
 ```rust
-// TRAIT = Interface that defines required behavior
-trait Authenticatable {
-    fn login(&self, username: &str, password: &str) -> bool;
-    fn logout(&self) -> String;
-    
-    // Traits can have DEFAULT implementations!
-    fn is_logged_in(&self) -> bool {
-        true  // Default behavior, can be overridden
-    }
+// TRAIT = Interface that says "You must be able to do this"
+trait CanSpeak {
+    fn speak(&self) -> String;
 }
 
-// ANY struct can implement this trait
-struct DatabaseAuth { connection: String }
-struct MockAuth;  // 🎯 Unit-like struct - no data, just behavior!
+// Different types can implement the same interface
+struct Dog;
+struct Cat;
 
-impl Authenticatable for DatabaseAuth {
-    fn login(&self, username: &str, password: &str) -> bool {
-        // Check database
-        username == "admin" && password == "secret"
-    }
-    fn logout(&self) -> String { "Database logout".to_string() }
+impl CanSpeak for Dog {
+    fn speak(&self) -> String { "Woof!".to_string() }
 }
 
-impl Authenticatable for MockAuth {
-    fn login(&self, _username: &str, _password: &str) -> bool { 
-        true  // Mock always succeeds
-    }
-    fn logout(&self) -> String { "Mock logout".to_string() }
+impl CanSpeak for Cat {
+    fn speak(&self) -> String { "Meow!".to_string() }
 }
 
-// Generic function works with ANY type that implements the trait
-fn handle_login<T: Authenticatable>(auth: &T, user: &str, pass: &str) {
-    if auth.login(user, pass) {
-        println!("✅ Login successful!");
-    }
+// Function works with ANY type that implements CanSpeak
+fn make_sound(animal: &dyn CanSpeak) {
+    println!("{}", animal.speak());
 }
+
+// Usage
+make_sound(&Dog);  // Woof!
+make_sound(&Cat);  // Meow!
 ```
 
-🧠 **How do you achieve polymorphism without inheritance?**
-"Traits define shared behavior contracts. Any type can implement multiple traits. Generic functions with trait bounds work with any type that fulfills the contract, enabling powerful polymorphism without inheritance complexity."
+🧠 **How are traits like interfaces in other languages?**
+"Traits are Rust's version of interfaces. They define contracts - 'if you want to be a CanSpeak thing, you must have a speak() method.' Any type can implement multiple traits."
 
 🔥 **Why This Is REVOLUTIONARY**
-Composition over inheritance, zero-cost abstractions, compile-time polymorphism with no runtime overhead.
+No inheritance complexity, multiple trait implementations per type, zero runtime cost - all the flexibility of interfaces with compile-time guarantees.
 
 ---
 
