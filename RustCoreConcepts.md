@@ -117,6 +117,7 @@ println!("{}", page_ref);
 
 🔥 **Why This Is REVOLUTIONARY**
 Other languages crash at runtime. Rust catches pointer problems while coding - zero crashes, zero slowdowns.
+
 ---
 
 ### 🏠 OWNERSHIP - "Who's Responsible for Cleanup?"
