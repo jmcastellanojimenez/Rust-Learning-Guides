@@ -47,6 +47,8 @@ No casting errors, no memory waste, clear transformation pipeline with full type
 
 ### 👥 BORROWING - "Can I Use Your Stuff Without Owning It?"
 
+💡 Borrowing is ownership's "rental system"!
+
 ```rust
 // ✅ SEQUENTIAL borrowing - totally fine
 validate_email(&user_data);        // borrow for reading, then return
@@ -58,9 +60,6 @@ let read_ref = &user_data;         		// immutable borrow active
 let write_ref = &mut user_data;    		// ERROR: can't have both at same time!
 println!("{} {}", read_ref, write_ref);  // both trying to be active
 ```
-
-💡 Borrowing is ownership's "rental system"!
-
 
 🧠 **How does Rust prevent data races?**
 "Rust's borrow checker ensures either multiple threads can read simultaneously (&data) OR exactly one thread can modify (&mut data), but never both. This prevents race conditions at compile time, not runtime, making servers incredibly safe and fast."
