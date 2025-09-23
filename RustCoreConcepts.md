@@ -181,6 +181,39 @@ let num: u32 = parse_number(&user_input).expect("Must be a number"); // Crashes 
 No hidden exceptions, no silent failures, no production crashes - every error path is explicit and handled.
 
 ---
+
+### 🎯 MACROS - "Code That Writes Code (Safely)"
+
+```rust
+// WITHOUT macros - boring repetition:
+fn add_one(x: i32) -> i32 { x + 1 }
+fn add_two(x: i32) -> i32 { x + 2 }
+fn add_three(x: i32) -> i32 { x + 3 }
+
+// WITH a macro - write once, use many times:
+macro_rules! make_adder {
+    ($name:ident, $num:expr) => {
+        fn $name(x: i32) -> i32 { 
+            x + $num 
+        }
+    };
+}
+
+// Now just do this:
+make_adder!(add_one, 1);
+make_adder!(add_two, 2);
+make_adder!(add_three, 3);
+
+// The macro "copy-pasted" and created those 3 functions for you!
+```
+
+🧠 **How do macros maintain Rust's safety guarantees?**
+"Macros operate at compile time, generating code that's then checked by Rust's borrow checker and type system. They provide zero-cost abstractions for repetitive patterns while maintaining all of Rust's safety guarantees."
+
+🔥 **Why This Is REVOLUTIONARY**
+Eliminate boilerplate without runtime cost, generate type-safe code programmatically, and extend the language itself - all while maintaining Rust's compile-time guarantees.
+
+---
 ## 🏗️ Architecture Layer:
 ---
 
@@ -416,18 +449,19 @@ Production-grade async runtime with zero-cost abstractions, work-stealing schedu
 ---
 
 ```
-🔒 FOUNDATION LAYER:
-├── Ownership: Who owns data?
-├── Borrowing: Who can access data when?
-├── Lifetimes: How long does data live?
-├── Immutability: Data safe by default
-└── Result: Explicit error handling
+🔒 FOUNDATION LAYER (Compile-time Guarantees):
+├── Ownership: Memory safety
+├── Borrowing: Concurrency safety  
+├── Lifetimes: Pointer safety
+├── Immutability: Mutation safety
+├── Result: Error safety
+└── Macros: Code generation safety
 
-🏗️ ARCHITECTURE LAYER:
-├── Structs: Organized data with behavior
-├── Enums: Type-safe state machines
-├── Traits: Polymorphic contracts
-└── Async: Concurrent operations
+🏗️ ARCHITECTURE LAYER (Runtime Organization):
+├── Structs: Data + behavior
+├── Enums: State machines
+├── Traits: Contracts
+└── Async: Concurrency
 
 ⚡ PRODUCTION RESULT:
 ├── Web servers handling 50K+ req/sec
