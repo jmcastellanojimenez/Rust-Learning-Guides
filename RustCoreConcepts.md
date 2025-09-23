@@ -19,6 +19,17 @@ let read_only = &data;       // immutable reference
 let can_modify = &mut data;  // mutable reference (if data was mut)
 ```
 
+- The Actual Rule:
+At any given moment, you can have EITHER:
+
+· Multiple immutable references (&data), OR
+
+· Exactly one mutable reference (&mut data)
+
+- Key Point:
+
+It's not "one mutable reference per variable forever" - it's "one active mutable reference at a time."
+
 🧠 **How does Rust handle variable safety?**
 "Variables are immutable by default in Rust. You must explicitly declare mut to modify data. This prevents accidental modifications and makes concurrent code inherently safer since immutable data can be shared across threads without locks."
 
