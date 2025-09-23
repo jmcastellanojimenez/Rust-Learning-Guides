@@ -1,6 +1,4 @@
-🚨 Rust forces you to think about what can go wrong. Your programs become more reliable because you must handle every possible failure case.
-
-**"Two Types of Errors, Two Ways to Handle Them"**
+🚨 **"Two Types of Errors, Two Ways to Handle Them"**
 
 ---
 
