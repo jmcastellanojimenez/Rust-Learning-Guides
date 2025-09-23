@@ -6,7 +6,7 @@
 
 **HashMap** - Use for key-value lookups and counting
 
-All three store data on the heap and can grow at runtime. All three follow Rust's ownership rules strictly.
+✅ All three store data on the heap and can grow at runtime. All three follow Rust's ownership rules strictly.
 
 ---
 
