@@ -1,4 +1,10 @@
-**"Three Data Structures You Actually Need"**
+### Quick Reference
+
+**Vec** - Use for lists of the same type that grow/shrink
+**String** - Use for text that changes (for read-only text, use &str)  
+**HashMap** - Use for key-value lookups and counting
+
+All three store data on the heap and can grow at runtime. All three follow Rust's ownership rules strictly.
 
 ---
 
@@ -19,7 +25,7 @@ for score in &scores {
 }
 ```
 
-Why Vec matters: Grows automatically, stores data next to each other in memory for speed, enforces ownership rules.
+✅ Why Vec matters: Grows automatically, stores data next to each other in memory for speed, enforces ownership rules.
 
 ---
 
@@ -41,7 +47,7 @@ let greeting = format!("Hi, {}", name);     // Doesn't take ownership
 let first = text.chars().nth(0);            // Returns Option<char>
 ```
 
-Why String is tricky: UTF-8 encoding means one character might be multiple bytes. Rust prevents crashes by disallowing direct indexing.
+✅ Why String is tricky: UTF-8 encoding means one character might be multiple bytes. Rust prevents crashes by disallowing direct indexing.
 
 ---
 
@@ -65,7 +71,7 @@ for word in "hello world hello".split_whitespace() {
 }
 ```
 
-Why HashMap is useful: Fast lookups by key, perfect for counting things or storing configuration data.
+✅ Why HashMap is useful: Fast lookups by key, perfect for counting things or storing configuration data.
 
 ---
 
@@ -91,13 +97,3 @@ let key = String::from("name");
 map.insert(key, "Alice");           // key is moved into map
 // println!("{}", key);             // ERROR: key no longer exists
 ```
-
----
-
-## Quick Reference
-
-**Vec** - Use for lists of the same type that grow/shrink
-**String** - Use for text that changes (for read-only text, use &str)  
-**HashMap** - Use for key-value lookups and counting
-
-All three store data on the heap and can grow at runtime. All three follow Rust's ownership rules strictly.
