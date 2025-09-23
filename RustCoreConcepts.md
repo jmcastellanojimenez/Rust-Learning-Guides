@@ -88,8 +88,11 @@ fn process_data(input: String) -> String {  // function now OWNS input
 ```
 
 💡 Rust forces you to think about which one you want, preventing memory bugs while keeping performance predictable
+
     - Move = Transfer ownership (cheap)
+
     - Copy = Duplicate on stack (cheap)
+    
     - Clone = Duplicate on heap (expensive, explicit)
 
 🧠 **How does Rust manage memory without garbage collection?**
